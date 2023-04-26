@@ -22,6 +22,7 @@ Start-Process -FilePath '.\vs_community.exe' -ArgumentList '--quiet', '--noresta
 
 # Install .NET Entity Framework Core tools
 dotnet tool install --global dotnet-ef
+dotnet tool install -g microsoft.sqlpackage
 
 # Install Azure CLI
 Invoke-WebRequest -Uri 'https://aka.ms/installazurecliwindows' -OutFile 'AzureCLI.msi'
