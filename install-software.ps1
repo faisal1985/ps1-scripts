@@ -5,9 +5,6 @@ Start-Process -FilePath '.\dotnet-sdk-installer.exe' -ArgumentList '/install /qu
 Invoke-WebRequest -Uri 'https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-6.0.1-windows-x64-installer' -OutFile 'dotnet-runtime-installer.exe'
 Start-Process -FilePath '.\dotnet-runtime-installer.exe' -ArgumentList '/install /quiet /norestart' -Wait
 
-# Install .NET Entity Framework Core tools
-dotnet tool install --global dotnet-ef
-
 # Install SQL Server Management Studio (SSMS)
 Invoke-WebRequest -Uri 'https://aka.ms/ssmsfullsetup' -OutFile 'SSMS-Setup.exe'
 Start-Process -FilePath '.\SSMS-Setup.exe' -ArgumentList '/install /quiet /norestart' -Wait
@@ -22,6 +19,18 @@ dotnet tool install -g Microsoft.Data.Tools.Msbuild
 # Install Visual Studio 2022 Community Edition with Azure and Web App packages
 Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vs_community.exe' -OutFile 'vs_community.exe'
 Start-Process -FilePath '.\vs_community.exe' -ArgumentList '--quiet', '--norestart', '--wait', '--add Microsoft.VisualStudio.Workload.Azure', '--add Microsoft.VisualStudio.Workload.NetWeb' -Wait
+
+# Install .NET Entity Framework Core tools
+dotnet tool install --global dotnet-ef
+
+# Install Azure CLI
+Invoke-WebRequest -Uri 'https://aka.ms/installazurecliwindows' -OutFile 'AzureCLI.msi'
+Start-Process -FilePath '.\AzureCLI.msi' -ArgumentList '/quiet' -Wait
+
+# Install Azure Bicep CLI
+$BicepVersion = (Invoke-RestMethod -Uri 'https://api.github.com/repos/Azure/bicep/releases/latest').tag_name
+$url = "https://github.com/Azure/bicep/releases/download/${BicepVersion}/bicep-win-x64.exe"
+$output = "bicep-win-x64.exe"
 
 # Install Bicep CLI
 $BicepVersion = '0.4.1'
